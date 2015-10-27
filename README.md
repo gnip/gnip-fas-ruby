@@ -1,18 +1,13 @@
 # gnip-fas-ruby
 Example Ruby app for Full-Archive Search
 
-
-***
-***Ruby Client for Gnip Historical Full-archive Search API***
-***
-
-***Gnip Full-Archive Search API***
+***Ruby Client for Gnip Full-Archive Search API***
 
 Search requests to the Full-Archive Search API allow you to query the complete historical archive of publicly available Tweets. It can be used to retrieve all results associated with a query (with pagination if needed), or perhaps the most recent results for a high-volume query. Central to the Full-Archive Search API is the ability to ask about the *number* of Tweets associated with a query.
 
 More information on the Full-Archive Search API can be found [HERE](http://support.gnip.com/apis/search_full_archive_api/).
 
-***So, what does this Gnip Full-Archvie Search API client do?***
+***So, what does this Gnip Full-Archive Search API client do?***
 
 This Ruby client is a wrapper around the Full-Archive Search API. It was written to be a flexible tool for managing Full-Archive Search API requests. Here are some of the features:
 
