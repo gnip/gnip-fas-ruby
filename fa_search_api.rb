@@ -1,12 +1,13 @@
 #A command-line wrapper to the fa_search class.
 #Uses the 'optparse' gem for parsing command-line options.  For better or worse...
+#The code here focuses on parsing command-line options, config files, then calling get_data or get_counts methods.
 
 #Loads up rules, and loops through them.
 #Writes to standard-out, files or to a database.
 
 #Example usage: see README.md
 
-require_relative "./fa_search_demo.rb"
+require_relative "./fa_search.rb"
 
 #=======================================================================================================================
 if __FILE__ == $0  #This script code is executed when running this file.
@@ -76,7 +77,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
         #Search rule.  This can be a single rule "\"this exact phrase\" OR keyword"
         o.on('-r RULE', '--rule', 'A single rule passed in on command-line, or a file containing multiple rules.') {|rule| $rule = rule}
         #Tag, optional.  Not in payload, but triggers a "matching_rules" section with rule/tag values.
-        o.on('-t TAG', '--tag', 'Optional. Gets tacked onto payload if included. Alternatively, rules files can contain tags.') {|tag| $tag = tag}
+        o.on('-t TAG', '--tag', 'Optional. Gets included in the  payload if included. Alternatively, rules files can contain tags.') {|tag| $tag = tag}
 
         o.on('-o OUTBOX', '--outbox', 'Optional. Triggers the generation of files and where to write them.') {|outbox| $outbox = outbox}
         o.on('-z', '--zip', 'Optional. If writing files, compress the files with gzip.') {|zip| $zip = zip}
@@ -138,7 +139,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
 
     if !$address.nil? then
         #Do we have a URL or an account name?
-        if !$address.include?("gnip.com") then #we have an account name
+        if !$address.include?("data-api") then #we have an account name
             oSearch.account_name = $address
         else #we have a Search URL with form: https://search.gnip.com/accounts/jim/search/prod.json
             #Parse out account name and stream name/label.
@@ -266,7 +267,6 @@ if __FILE__ == $0  #This script code is executed when running this file.
         oSearch.rules.rules.each do |rule|
             p "Getting counts for rule: #{rule["value"]}"
             results = oSearch.get_counts(rule["value"], oSearch.from_date, oSearch.to_date, $duration)
-            #puts results.to_json
         end
     else #Asking for data!
         interval = "minute"
