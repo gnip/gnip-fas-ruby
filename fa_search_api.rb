@@ -7,7 +7,7 @@
 
 #Example usage: see README.md
 
-require_relative "./fa_search.rb"
+require_relative "./lib/fa_search.rb"
 
 #=======================================================================================================================
 if __FILE__ == $0  #This script code is executed when running this file.
@@ -272,7 +272,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
         interval = "minute"
         oSearch.rules.rules.each do |rule|
             p "Getting activities for rule: #{rule["value"]}"
-            oSearch.get_data(rule["value"],oSearch.from_date,oSearch.to_date,interval,rule["tag"])
+            oSearch.get_data(rule["value"], oSearch.from_date, oSearch.to_date, rule["tag"])
         end
     end
     p "Exiting"
