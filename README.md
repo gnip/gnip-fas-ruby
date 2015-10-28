@@ -17,10 +17,10 @@ This Ruby client is a wrapper around the Full-Archive Search API. It was written
 * Activity counts can be returned by using the "-l" parameter (as in 'look before you leap').  Counts by minute, by hour, or by day can be returned.
 * Search start and end time can be specified in several ways: standard PowerTrack timestamps (YYYYMMDDHHMM), 
   ISO 8061/Twitter timestamps (2013-11-15T17:16:42.000Z), as "YYYY-MM-DD HH:MM", and also with simple notation indicating the number of minutes (30m), hours (12h) and days (14d).
-* Configuration and rule details can be specified by passing in files or specifying on the command-line, or a combination of both.  Here are some quick example:
+* Configuration and rule details can be specified by passing in files or specifying on the command-line, or a combination of both.  Here are some quick examples:
   * Using configuration and rules files, requesting 30 days: $ruby fa_search_api.rb -c "./myConfig.yaml" -r "./myRules.json"
-  * Using configuration and rules in files, requesting last 7 days: $ruby fa_search_api.rb -c "./myConfig.yaml" -r "./myRules.json" -s 7d
-  * Specifying everything on the command-line: $ruby fa_search_api.rb -u me@there.com -p password -a http://search.gnip.com/accounts/jim/search/prod.json -r "snow deep" -s 7d
+  * Using configuration and rules files, requesting last 7 days: $ruby fa_search_api.rb -c "./myConfig.yaml" -r "./myRules.json" -s 7d
+  * Specifying everything on the command-line: $ruby fa_search_api.rb -u me@there.com -p password -a http://data-api.twitter.com/search/fullarchive/accounts/my_account/prod.json -r "snow deep" -s 7d
   
 **Client Overview**
 
@@ -37,7 +37,7 @@ The client can also use the "counts" mechanism to return only the activity count
 
 **Specifying Search Start and End Times**
 
-If no "start" and "end" parameters are specified, the Full-Archive Search API defaults to the most recent 30-day. "Start" time defaults to 30 days ago from now, and "End" time default to "now". Start (-s) and end (-e) parameters can be specified in a variety of ways:
+If no "start" and "end" parameters are specified, the Full-Archive Search API defaults to the most recent 30 days. "Start" time defaults to 30 days ago from now, and "End" time default to "now". Start (-s) and end (-e) parameters can be specified in a variety of ways:
 
 * Standard PowerTrack format, YYYYMMDDHHmm (UTC)
    * -s 201311070700 -e 201311080700 --> Search 2013-11-07 MST. 
@@ -87,7 +87,7 @@ Usage: search_api [options]
 
 **Configuration Files**
 
-Many script and Full-Archive Search API options can be specified in a configuration (YAML) file as an alternative to passing in settings via the command-line.  Please note that if you are writing data to a database you must specify the database details in a configuration file.
+Many app and Full-Archive Search API options can be specified in a configuration (YAML) file as an alternative to passing in settings via the command-line.  Please note that if you are writing data to a database you must specify the database details in a configuration file.
 
 ```yaml
 #Account details.
