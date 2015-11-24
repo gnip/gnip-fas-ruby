@@ -40,23 +40,23 @@ The client can also use the "counts" mechanism to return only the activity count
 If no "start" and "end" parameters are specified, the Full-Archive Search API defaults to the most recent 30 days. "Start" time defaults to 30 days ago from now, and "End" time default to "now". Start (-s) and end (-e) parameters can be specified in a variety of ways:
 
 * Standard PowerTrack format, YYYYMMDDHHmm (UTC)
-   * -s 201311070700 -e 201311080700 --> Search 2013-11-07 MST. 
-   * -s 201311090000 --> Search since 2013-11-09 00:00 UTC.
+   * -s 201511070700 -e 201511080700 --> Search 2013-11-07 MST. 
+   * -s 201511090000 --> Search since 2015-11-09 00:00 UTC.
 * A combination of an integer and a character indicating "days" (#d), "hours" (#h) or "minutes" (#m).  Some examples:
    * -s 1d --> Start one day ago (i.e., search the last day)
    * -s 14d -e 7d --> Start 14 days ago and end 7 days ago (i.e. search the week before last)  
    * -s 6h --> Start six hours ago (i.e. search the last six hours) 
 * "YYYY-MM-DD HH:mm" (UTC, use double-quotes please)
-   * -s "2013-11-04 07:00" -e "2013-11-07 06:00" --> Search 2013-11-04 and 2013-11-05 MST.
+   * -s "2015-11-04 07:00" -e "2015-11-07 06:00" --> Search 2015-11-04 and 2015-11-05 MST.
 * "YYYY-MM-DDTHH:MM:SS.000Z" (ISO 8061 timestamps as used by Twitter, in UTC)
-   * -s 2013-11-20T15:39:31.000Z --> Search beginning at 2013-11-20 22:39 MST (note that seconds are dropped).
+   * -s 2015-11-20T15:39:31.000Z --> Search beginning at 2015-11-20 22:39 MST (note that seconds are dropped).
 
 **Command-line options**
 
 At a minimum, the following parameters are needed to make a Full-Archive Search API request:
 
 * Authentication details: username and password.  They can be provided on command-line or as part of a specified configuration file.
-* Account and stream names or Search API URL.  If account and stream names are provided, the Search URLs are generated from that information. 
+* Account and stream names or Full-Archive Search API URL.  If account and stream names are provided, the Full-Archive Search URLs are generated from that information. 
 * At least one rule/filter. A single rule can be passed in on the command-line, or one or more passed in from a rules file.
 * There are three output options: activities can simply returned from script as "standard out", written to data files, or written to a database.  If no configuration file is used, data will be written to standard out.  Otherwise you can specify your output preference in the config file. If writing to data files or a database you must specify the details in the config file (e.g. output folder, database connection details).
 
