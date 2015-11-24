@@ -156,6 +156,15 @@ rules:
     tag    : umbrellas
 ```
 
+*** Getting Started ***
+
++ Get access to Full-Archive Search API from Gnip, establish username and password.
++ Clone respository.
++ bundle install. See project Gem file. Need some basic gems like 'json', 'yaml', and 'zlib'. 
++ Configure the config.yaml. 
++ Test it out by running $ruby fa_search_app.rb  -c "./config/config.yaml" -r "gnip" -s 7d
++ Look for API JSON responses in app's standard out, outbox, or in the configured database. 
+
  
   
 
