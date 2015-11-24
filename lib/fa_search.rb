@@ -263,7 +263,9 @@ class FaSearch
     #@max_results = API_ACTIVITY_LIMIT   #Set in constructor.
 
     def build_request(rule, from_date=nil, to_date=nil)
-        request = {:query => rule}
+        request = {}
+        
+        request[:query] = rule['value']
 
         if !from_date.nil?
             request[:fromDate] = from_date
@@ -296,6 +298,8 @@ class FaSearch
     def build_data_request(rule, from_date=nil, to_date=nil, max_results=nil, next_token=nil)
 
         request = build_request(rule, from_date, to_date)
+        
+        request[:tag] = rule['tag']
 
         if !max_results.nil?
             request[:maxResults] = max_results
@@ -423,7 +427,7 @@ class FaSearch
             #Each 'page' has a start and end time, go get those for generating filename.
 
             filename = ""
-            filename = get_file_name(rule, api_response['results'])
+            filename = get_file_name(rule['value'], api_response['results'])
 
             puts "Storing Search API data in file: #{filename}"
 
@@ -490,7 +494,7 @@ class FaSearch
     end
 
     #Make initial request, and look for 'next' token, and re-request until the 'next' token is no longer provided.
-    def get_data(rule, start_time, end_time, tag=nil)
+    def get_data(rule, start_time, end_time)
 
         next_token = 'first request'
 
