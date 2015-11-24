@@ -102,7 +102,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
     oSearch.rules.rules = Array.new
 
     #Provided config file, which can include many things, especially username, password, account and stream names.
-    if !$config.nil? then
+    if !$config.nil?
         oSearch.get_system_config($config)
     end
 
@@ -117,13 +117,13 @@ if __FILE__ == $0  #This script code is executed when running this file.
         oSearch.user_name = $username
     end
 
-    if oSearch.user_name.nil? or oSearch.user_name == "" then
+    if oSearch.user_name.nil? or oSearch.user_name == ""
         error_msgs << "User name is required. You can pass this in on command-line or specify in configuration file."
     end
 
     if !$password.nil?
 
-        if oSearch.password_encoded?($password) then
+        if oSearch.password_encoded?($password)
             oSearch.password_encoded = $password
         else
            oSearch.password = $password
@@ -137,9 +137,9 @@ if __FILE__ == $0  #This script code is executed when running this file.
 
     #We need to have account name and stream label (name), unless the Search API URL is provided =======================
 
-    if !$address.nil? then
+    if !$address.nil?
         #Do we have a URL or an account name?
-        if !$address.include?("data-api") then #we have an account name
+        if !$address.include?("data-api")  #we have an account name
             oSearch.account_name = $address
         else #we have a Search URL with form: https://search.gnip.com/accounts/jim/search/prod.json
             #Parse out account name and stream name/label.
@@ -150,31 +150,31 @@ if __FILE__ == $0  #This script code is executed when running this file.
     end
 
     #See if we have a stream label/name being provided.
-    if !$name.nil? then
+    if !$name.nil?
         oSearch.label = $name
     end
 
     #OK, now we should have both account_name and label, otherwise add another error message.
-    if oSearch.account_name.nil? or oSearch.account_name == "" then
+    if oSearch.account_name.nil? or oSearch.account_name == ""
         error_msgs << "Account name is required. You can pass this in on command-line or specify in configuration file."
     end
 
-    if oSearch.label.nil? or oSearch.label == "" then
+    if oSearch.label.nil? or oSearch.label == ""
         error_msgs << "Search label is required. You can pass this in on command-line or specify in configuration file."
     end
 
     oSearch.set_http
 
     #We need to have at least one rule.
-    if !$rule.nil? then
+    if !$rule.nil?
         #Rules file provided?
         extension = $rule.split(".")[-1]
-        if extension == "yaml" or extension == "json" then
+        if extension == "yaml" or extension == "json"
             oSearch.rules_file = $rule
             if extension == "yaml" then
                 oSearch.rules.loadRulesYAML(oSearch.rules_file)
             end
-            if extension == "json" then
+            if extension == "json"
                 oSearch.rules.loadRulesYAML(oSearch.rules_file)
             end
 
@@ -191,7 +191,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
     #Everything else is option or can be driven by defaults.
 
     #Tag is completely optional.
-    if !$tag.nil? then
+    if !$tag.nil?
         rule = {}
         rule = oSearch.rules.rules
         rule[0]["tag"] = $tag
@@ -200,8 +200,8 @@ if __FILE__ == $0  #This script code is executed when running this file.
     #Look is optional.
     #Duration is optional, defaults to "hour" which is handled by Search API.
     #Can only be "minute", "hour" or "day".
-    if !$duration.nil? then
-        if !['minute','hour','day'].include?($duration) then
+    if !$duration.nil?
+        if !['minute','hour','day'].include?($duration)
             p "Warning: unrecognized duration setting, defaulting to 'minute'."
             $duration = 'minute'
         end
@@ -223,57 +223,57 @@ if __FILE__ == $0  #This script code is executed when running this file.
 
     #Handle start date.
     #First see if it was passed in
-    if !$start_date.nil? then
+    if !$start_date.nil?
         oSearch.from_date = oSearch.set_date_string($start_date)
     end
 
     #Handle end date.
     #First see if it was passed in
-    if !$end_date.nil? then
+    if !$end_date.nil?
         oSearch.to_date = oSearch.set_date_string($end_date)
     end
 
     #Max results is optional, defaults to 100 by Search API.
-    if !$max_results.nil? then
+    if !$max_results.nil?
         oSearch.max_results = $max_results
     end
 
     #Writing data to files.
-    if !$outbox.nil? then
+    if !$outbox.nil?
         oSearch.out_box = $outbox
         oSearch.storage = "files"
 
-        if !$zip.nil? then
+        if !$zip.nil?
             oSearch.compress_files = true
         end
     end
 
     #Check for configuration errors.
-    if error_msgs.length > 0 then
-        p "Errors in configuration: "
+    if error_msgs.length > 0
+        puts "Errors in configuration: "
         error_msgs.each { |e|
-          p e
+          puts e
         }
 
-        p ""
-        p "Please check configuration and try again... Exiting."
+        puts ""
+        puts "Please check configuration and try again... Exiting."
 
         exit
     end
 
     #Wow, we made it all the way through that!  Documentation must be awesome...
 
-    if $look == true then #Handle count requests.
+    if $look == true #Handle count requests.
         oSearch.rules.rules.each do |rule|
-            p "Getting counts for rule: #{rule["value"]}"
+            puts "Getting counts for rule: #{rule["value"]}"
             results = oSearch.get_counts(rule["value"], oSearch.from_date, oSearch.to_date, $duration)
         end
     else #Asking for data!
         interval = "minute"
         oSearch.rules.rules.each do |rule|
-            p "Getting activities for rule: #{rule["value"]}"
+            puts "Getting activities for rule: #{rule["value"]}"
             oSearch.get_data(rule["value"], oSearch.from_date, oSearch.to_date, rule["tag"])
         end
     end
-    p "Exiting"
+    puts "Exiting"
 end

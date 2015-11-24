@@ -9,7 +9,7 @@ class FaSearch
 
     #PowerTrack classes
     require_relative "../common/restful"
-    require_relative "../common/database"
+    #require_relative "../common/database"
     require_relative "../common/rules"
 
     API_ACTIVITY_LIMIT = 500 #Limit on the number of activity IDs per Rehydration API request, can be overridden.
@@ -57,7 +57,7 @@ class FaSearch
     def password_encoded?(password)
         reg_ex_test = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
 
-        if password =~ /#{reg_ex_test}/ then
+        if password =~ /#{reg_ex_test}/
             return true
         else
             return false
@@ -76,26 +76,26 @@ class FaSearch
         #Config details.
 
         #Parsing account details if they are provided in file.
-        if !config["account"].nil? then
-            if !config["account"]["account_name"].nil? then
+        if !config["account"].nil? 
+            if !config["account"]["account_name"].nil? 
                 @account_name = config["account"]["account_name"]
             end
 
-            if !config["account"]["user_name"].nil? then
+            if !config["account"]["user_name"].nil? 
                 @user_name = config["account"]["user_name"]
             end
 
-            if !config["account"]["password"].nil? or !config["account"]["password_encoded"].nil? then
+            if !config["account"]["password"].nil? or !config["account"]["password_encoded"].nil? 
                 @password_encoded = config["account"]["password_encoded"]
 
-                if @password_encoded.nil? then #User is passing in plain-text password...
+                if @password_encoded.nil? #User is passing in plain-text password...
                     @password = config["account"]["password"]
                     @password_encoded = Base64.encode64(@password)
                 end
             end
         end
 
-        if !config["search"]["label"].nil? then #could be provided via command-line
+        if !config["search"]["label"].nil? #could be provided via command-line
             @label = config["search"]["label"]
         end
 
@@ -120,7 +120,7 @@ class FaSearch
 
         #@write_rules = config["search"]["write_rules"]
 
-        if @storage == "database" then #Get database connection details.
+        if @storage == "database" #Get database connection details.
             db_host = config["database"]["host"]
             db_port = config["database"]["port"]
             db_schema = config["database"]["schema"]
@@ -145,7 +145,7 @@ class FaSearch
 
 
     def get_search_rules
-        if !@rules_file.nil then #TODO: Add JSON option.
+        if !@rules_file.nil #TODO: Add JSON option.
             @rules.loadRulesYAML(@rules_file)
         end
     end
@@ -155,7 +155,7 @@ class FaSearch
     #Confirm a directory exists, creating it if necessary.
     def checkDirectory(directory)
         #Make sure directory exists, making it if needed.
-        if not File.directory?(directory) then
+        if not File.directory?(directory) 
             FileUtils.mkpath(directory) #logging and user notification.
         end
         directory
@@ -182,35 +182,35 @@ class FaSearch
         date = Time.new
 
         #Handle minute notation.
-        if input.downcase[-1] == "m" then
+        if input.downcase[-1] == "m" 
             date = now - (60 * input[0..-2].to_f)
             return get_date_string(date)
         end
 
         #Handle hour notation.
-        if input.downcase[-1] == "h" then
+        if input.downcase[-1] == "h" 
             date = now - (60 * 60 * input[0..-2].to_f)
             return get_date_string(date)
         end
 
         #Handle day notation.
-        if input.downcase[-1] == "d" then
+        if input.downcase[-1] == "d" 
             date = now - (24 * 60 * 60 * input[0..-2].to_f)
             return get_date_string(date)
         end
 
         #Handle PowerTrack format, YYYYMMDDHHMM
-        if input.length == 12 and numeric?(input) then
+        if input.length == 12 and numeric?(input) 
             return input
         end
 
         #Handle "YYYY-MM-DD 00:00"
-        if input.length == 16 then
+        if input.length == 16 
             return input.gsub!(/\W+/, '')
         end
 
         #Handle ISO 8601 timestamps, as in Twitter payload "2013-11-15T17:16:42.000Z"
-        if input.length > 16 then
+        if input.length > 16 
             date = Time.parse(input)
             return get_date_string(date)
         end
@@ -253,7 +253,8 @@ class FaSearch
 
         rule_str = rule.gsub(/[^[:alnum:]]/, "")[0..9]
         filename = "#{rule_str}_#{start_time}_#{end_time}"
-        return filename
+        
+        filename
     end
 
     #Builds a hash and generates a JSON string.
@@ -272,7 +273,7 @@ class FaSearch
             request[:toDate] = to_date
         end
 
-        return request
+        request
     end
 
     def build_counts_request(rule, from_date=nil, to_date=nil, interval=nil, next_token=nil)
@@ -289,7 +290,7 @@ class FaSearch
           request[:next] = next_token
         end
 
-        return JSON.generate(request)
+        JSON.generate(request)
     end
 
     def build_data_request(rule, from_date=nil, to_date=nil, max_results=nil, next_token=nil)
@@ -306,7 +307,7 @@ class FaSearch
             request[:next] = next_token
         end
 
-        return JSON.generate(request)
+        JSON.generate(request)
     end
 
     def get_count_total(count_response)
@@ -333,7 +334,7 @@ class FaSearch
      
       data = build_counts_request(rule, start_time, end_time, interval, next_token)
 
-      if (Time.now - @request_timestamp) < 1 then
+      if (Time.now - @request_timestamp) < 1 
         sleep 1
       end
       @request_timestamp = Time.now
@@ -357,7 +358,7 @@ class FaSearch
       results['results'] = temp['results']
 
 
-      if @storage == "files" then #write the file.
+      if @storage == "files"  #write the file.
 
           #Each 'page' has a start and end time, go get those for generating filename.
 
@@ -366,7 +367,7 @@ class FaSearch
 
           p "Storing Search API data in file: #{filename}"
 
-          if @compress_files then
+          if @compress_files 
               File.open("#{@out_box}/#{filename}.json.gz", 'w') do |f|
                   gz = Zlib::GzipWriter.new(f, level=nil, strategy=nil)
                   gz.write api_response.to_json
@@ -381,16 +382,16 @@ class FaSearch
             puts results
         end
 
-      return next_token
+      next_token
 
     end
 
-    def make_data_request(rule, start_time, end_time, max_results, next_token, tag)
+    def make_data_request(rule, start_time, end_time, max_results, next_token)
 
         @http.url = @urlSearch
         data = build_data_request(rule, start_time, end_time, max_results, next_token)
 
-        if (Time.now - @request_timestamp) < 1 then
+        if (Time.now - @request_timestamp) < 1
             sleep 1
         end
         @request_timestamp = Time.now
@@ -408,25 +409,25 @@ class FaSearch
         api_response = []
         api_response = JSON.parse(response.body)
 
-        if !(api_response["error"] == nil) then
+        if !(api_response["error"] == nil)
             puts "Handle error!"
         end
 
-        if (api_response['results'].length == 0) then
+        if (api_response['results'].length == 0)
            puts "No results returned."
            return api_response['next']
         end
 
-        if @storage == "files" then #write the file.
+        if @storage == "files" #write the file.
 
             #Each 'page' has a start and end time, go get those for generating filename.
 
             filename = ""
             filename = get_file_name(rule, api_response['results'])
 
-            p "Storing Search API data in file: #{filename}"
+            puts "Storing Search API data in file: #{filename}"
 
-            if @compress_files then
+            if @compress_files
                 File.open("#{@out_box}/#{filename}.json.gz", 'w') do |f|
                     gz = Zlib::GzipWriter.new(f, level=nil, strategy=nil)
                     gz.write api_response.to_json
@@ -457,7 +458,7 @@ class FaSearch
         end
 
         #Return next_token, or 'nil' if there is not one provided.
-        return api_response['next']
+        api_response['next']
     end
 
 
@@ -467,9 +468,9 @@ class FaSearch
       @count_total = 0
 
       time_span = "#{start_time} to #{end_time}.  "
-      if start_time.nil? and end_time.nil? then
+      if start_time.nil? and end_time.nil?
         time_span = "last 30 days."
-      elsif start_time.nil? then
+      elsif start_time.nil?
         time_span = "30 days ago to #{end_time}. "
       elsif end_time.nil?
         time_span = "#{start_time} to now.  "
@@ -478,7 +479,7 @@ class FaSearch
       puts "Retrieving counts from #{time_span}..."
 
       while !next_token.nil? do
-        if next_token == 'first request' then
+        if next_token == 'first request'
           next_token = nil
         end
         next_token = make_counts_request(rule, start_time, end_time, interval, next_token)
@@ -494,9 +495,9 @@ class FaSearch
         next_token = 'first request'
 
         time_span = "#{start_time} to #{end_time}.  "
-        if start_time.nil? and end_time.nil? then
+        if start_time.nil? and end_time.nil?
             time_span = "last 30 days."
-        elsif start_time.nil? then
+        elsif start_time.nil?
             time_span = "30 days ago to #{end_time}. "
         elsif end_time.nil?
             time_span = "#{start_time} to now.  "
@@ -505,11 +506,11 @@ class FaSearch
         puts "Retrieving data from #{time_span}..."
 
         while !next_token.nil? do
-            if next_token == 'first request' then
+            if next_token == 'first request'
                 next_token = nil
             end
             #puts "Next token: #{next_token}"
-            next_token = make_data_request(rule, start_time, end_time, max_results, next_token, tag)
+            next_token = make_data_request(rule, start_time, end_time, max_results, next_token)
         end
 
     end #process_data
