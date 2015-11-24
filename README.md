@@ -156,7 +156,7 @@ rules:
     tag    : umbrellas
 ```
 
-*** Getting Started ***
+***Getting Started***
 
 + Get access to Full-Archive Search API from Gnip, establish username and password.
 + Clone respository.
