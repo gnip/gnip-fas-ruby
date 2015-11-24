@@ -1,0 +1,17 @@
+{
+    "rules" :
+        [
+            {
+                "value" : "snow colorado",
+                "tag" : "ski_biz"
+            },
+            {
+                "value" : "snow utah",
+                "tag" : "ski_biz"
+            },
+            {
+                "value" : "rain washington",
+                "tag" : "umbrellas"
+            }
+        ]
+}
