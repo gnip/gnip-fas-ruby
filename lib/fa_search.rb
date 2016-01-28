@@ -265,7 +265,7 @@ class FaSearch
     def build_request(rule, from_date=nil, to_date=nil)
         request = {}
         
-        request[:query] = rule['value']
+        request[:query] = rule
 
         if !from_date.nil?
             request[:fromDate] = from_date
@@ -414,7 +414,7 @@ class FaSearch
         api_response = JSON.parse(response.body)
 
         if !(api_response["error"] == nil)
-            puts "Handle error!"
+            puts "Error: #{api_response["error"]["message"]}"
         end
 
         if (api_response['results'].length == 0)
@@ -427,7 +427,7 @@ class FaSearch
             #Each 'page' has a start and end time, go get those for generating filename.
 
             filename = ""
-            filename = get_file_name(rule['value'], api_response['results'])
+            filename = get_file_name(rule, api_response['results'])
 
             puts "Storing Search API data in file: #{filename}"
 

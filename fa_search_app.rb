@@ -272,7 +272,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
         interval = "minute"
         oSearch.rules.rules.each do |rule|
             puts "Getting activities for rule: #{rule["value"]}"
-            oSearch.get_data(rule, oSearch.from_date, oSearch.to_date)
+            oSearch.get_data(rule["value"], oSearch.from_date, oSearch.to_date)
         end
     end
     puts "Exiting"
