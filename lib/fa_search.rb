@@ -299,7 +299,7 @@ class FaSearch
 
         request = build_request(rule, from_date, to_date)
         
-        request[:tag] = rule['tag']
+        request[:tag] = rule['tag'] if not rule['tag'].nil?
 
         if !max_results.nil?
             request[:maxResults] = max_results
