@@ -1,7 +1,17 @@
 rules:
-  - value  : "snow colorado"
-    tag    : ski_biz
-  - value  : "snow utah"
-    tag    : ski_biz
-  - value  : "rain washington"
-    tag    : umbrellas
+  - value  : "@tmobile"
+    tag    : t-mobile
+  - value  : "@TMobileHelp OR (@tmobile (customer service OR customer service agent OR account OR account number OR billing OR cancel account OR password OR update OR eligible OR contact OR balance inquiry OR adjust OR adjustment OR dispute OR online OR fee OR charges OR network OR network issue OR troubleshooting OR device OR bad signal OR signal OR dropped call OR outage OR agent OR system OR upgrade OR overage OR store location OR store hours OR store services OR available products OR new phone OR buy OR purchase OR product order OR late payment OR late fee OR autopay OR return OR fix OR broken iphone OR broken phone OR deactivation OR roaming OR unlock OR international rate OR rate change OR price OR device activation OR trade in phone OR data OR help OR fees OR customer OR quit OR switch OR service OR disconnect OR bill OR broken OR coverage OR switch OR other provider OR competitor OR too expensive OR hate OR not satisfied OR fucked))"
+    tag    : t-mobile
+  - value  : "@Verizon"
+    tag    : verizon
+  - value  : "@VerizonSupport OR @VZWSupport OR (@Verizon (customer service OR customer service agent OR account OR account number OR billing OR cancel account OR password OR update OR eligible OR contact OR balance inquiry OR adjust OR adjustment OR dispute OR online OR fee OR charges OR network OR network issue OR troubleshooting OR device OR bad signal OR signal OR dropped call OR outage OR agent OR system OR upgrade OR overage OR store location OR store hours OR store services OR available products OR new phone OR buy OR purchase OR product order OR late payment OR late fee OR autopay OR return OR fix OR broken iphone OR broken phone OR deactivation OR roaming OR unlock OR international rate OR rate change OR price OR device activation OR trade in phone OR data OR help OR fees OR customer OR quit OR switch OR service OR disconnect OR bill OR broken OR coverage OR switch OR other provider OR competitor OR too expensive OR hate OR not satisfied OR fucked))"
+    tag    : verizon
+  - value  : "@WellsFargo"
+    tag    : WellsFargo
+  - value  : "@WellsFargo (customer service OR customer service agent OR account OR account number OR billing OR cancel account OR password OR update OR eligible OR eligibility OR contact OR balance inquiry OR adjust OR adjustment OR dispute OR online OR online banking OR ATM OR fee OR charges OR network OR network issue OR troubleshooting OR device OR bad signal OR signal OR dropped call OR outage OR agent OR bank location OR ATM location OR nearest ATM OR partner bank OR buy OR dispute charge  OR purchase OR late payment OR late fee OR fee OR autopay OR international rate OR exchange rate  OR credit card OR lost card OR stolen card OR misplaced card OR fraud OR refund OR incorrect OR make payment OR billing OR payment installment OR due date OR status OR cancel OR cancel account OR online account access OR online account OR store hours OR store services OR help OR fees OR customer OR quit OR switch OR service OR bill OR broken OR coverage OR switch OR other bank OR competitor OR hate OR not satisfied OR fucked)"
+    tag    : WellsFargo
+  - value  : "@TDBank_US"
+    tag    : TDBank
+  - value  : "@TDBank_US (customer service OR customer service agent OR account OR account number OR billing OR cancel account OR password OR update OR eligible OR eligibility OR contact OR balance inquiry OR adjust OR adjustment OR dispute OR online OR online banking OR ATM OR fee OR charges OR network OR network issue OR troubleshooting OR device OR bad signal OR signal OR dropped call OR outage OR agent OR bank location OR ATM location OR nearest ATM OR partner bank OR buy OR dispute charge  OR purchase OR late payment OR late fee OR fee OR autopay OR international rate OR exchange rate  OR credit card OR lost card OR stolen card OR misplaced card OR fraud OR refund OR incorrect OR make payment OR billing OR payment installment OR due date OR status OR cancel OR cancel account OR online account access OR online account OR store hours OR store services OR help OR fees OR customer OR quit OR switch OR service OR bill OR broken OR coverage OR switch OR other bank OR competitor OR hate OR not satisfied OR fucked)"
+    tag    : TDBank

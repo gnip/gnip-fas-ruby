@@ -226,13 +226,28 @@ class FaSearch
    # Payloads are descending chronological, first timestamp is end_time, last is start_time.  Got it?
    def get_file_name(rule, results)
 
-	  #Get start_time of this response payload.
-	  time = Time.parse(results.first['postedTime'])
-	  end_time = time.year.to_s + sprintf('%02i', time.month) + sprintf('%02i', time.day) + sprintf('%02i', time.hour) + sprintf('%02i', time.min) + sprintf('%02i', time.sec)
+	  #Format specific parsing.
+	  time_stamp = ""
+	  if results.first.has_key?("postedTime")
+		 format = 'as'
+	  else
+		 format = 'original'
+	  end
 
-	  #Get end_time of this response payload.
-	  time = Time.parse(results.last['postedTime'])
-	  start_time = time.year.to_s + sprintf('%02i', time.month) + sprintf('%02i', time.day) + sprintf('%02i', time.hour) + sprintf('%02i', time.min) + sprintf('%02i', time.sec)
+	  if format == 'as'
+
+		 #Get start_time of this response payload.
+		 time = Time.parse(results.first['postedTime'])
+		 end_time = time.year.to_s + sprintf('%02i', time.month) + sprintf('%02i', time.day) + sprintf('%02i', time.hour) + sprintf('%02i', time.min) + sprintf('%02i', time.sec)
+
+		 #Get end_time of this response payload.
+		 time = Time.parse(results.last['postedTime'])
+		 start_time = time.year.to_s + sprintf('%02i', time.month) + sprintf('%02i', time.day) + sprintf('%02i', time.hour) + sprintf('%02i', time.min) + sprintf('%02i', time.sec)
+
+
+	  elsif format == 'original'
+
+	  end
 
 	  rule_str = rule.gsub(/[^[:alnum:]]/, "")[0..9]
 	  filename = "#{rule_str}_#{start_time}_#{end_time}"
@@ -372,24 +387,39 @@ class FaSearch
 
 		 #Each 'page' has a start and end time, go get those for generating filename.
 
-		 filename = ""
 		 filename = get_counts_file_name(rule, temp['results'])
-
-		 p "Storing Search API data in file: #{filename}"
+		 filename_root = filename
 
 		 if @compress_files
+
+			num = 0
+			until not File.exists?("#{@out_box}/#{filename}.json")
+			   num += 1
+			   filename = "#{filename_root}_#{num}"
+			end
+
+			puts "Storing Search API data in GZIPPED file: #{filename}"
 			File.open("#{@out_box}/#{filename}.json.gz", 'w') do |f|
 			   gz = Zlib::GzipWriter.new(f, level=nil, strategy=nil)
 			   gz.write api_response.to_json
 			   gz.close
 			end
 		 else
+			num = 0
+			until not File.exists?("#{@out_box}/#{filename}.json")
+			   num += 1
+			   filename = "#{filename_root}_#{num}"
+			end
+
+
+			puts "Storing Search API data in file: #{filename}"
 			File.open("#{@out_box}/#{filename}.json", "w") do |new_file|
 			   new_file.write(temp.to_json)
 			end
 		 end
 	  else
-		 puts results
+		 #TODO REMOVE
+		 #puts results
 	  end
 
 	  next_token
@@ -471,7 +501,6 @@ class FaSearch
 	  api_response['next']
    end
 
-
    def get_counts(rule, start_time, end_time, interval)
 
 	  next_token = 'first request'
@@ -486,7 +515,7 @@ class FaSearch
 		 time_span = "#{start_time} to now.  "
 	  end
 
-	  puts "Retrieving counts from #{time_span}..."
+	  #puts "Retrieving counts from #{time_span}..."
 
 	  while !next_token.nil? do
 		 if next_token == 'first request'
@@ -495,7 +524,10 @@ class FaSearch
 		 next_token = make_counts_request(rule, start_time, end_time, interval, next_token)
 	  end
 
-	  puts "Total counts: #{@count_total}"
+	  #puts "Total counts: #{@count_total}"
+	  
+	  puts "#{time_span} #{@count_total}"
+	  #puts "#{time_span[4..5]}/#{time_span[0..3]} #{@count_total}" #useful for creating monthly plots
 
    end
 

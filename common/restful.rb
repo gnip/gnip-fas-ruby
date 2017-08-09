@@ -147,7 +147,8 @@ class PtRESTful
 
     def getFaSearchURL(account_name=nil,label=nil)
 
-      @url = "https://data-api.twitter.com/search/fullarchive/accounts/"  #Root url for Search PowerTrack.
+      #@url = "https://data-api.twitter.com/search/fullarchive/accounts/"  #Root url for Search PowerTrack.
+	  @url = "https://gnip-api.twitter.com/search/fullarchive/accounts/"
 
       if account_name.nil? then #user not passing in anything...
         if @account_name.nil?

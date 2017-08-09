@@ -9,7 +9,6 @@ account:
 
 search:
   label: prod
-  write_rules: true
   compress_files: false
   storage: standard_out #options: files, database, standard_out --> Store activities in local files, in database. or print to system out?
   out_box: ./output #Folder where retrieved data goes.

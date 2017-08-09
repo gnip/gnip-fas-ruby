@@ -265,7 +265,7 @@ if __FILE__ == $0  #This script code is executed when running this file.
 
     if $look == true #Handle count requests.
         oSearch.rules.rules.each do |rule|
-            puts "Getting counts for rule: #{rule["value"]}"
+            #puts "Getting counts for rule: #{rule["value"]}"
             results = oSearch.get_counts(rule["value"], oSearch.from_date, oSearch.to_date, $duration)
         end
     else #Asking for data!
@@ -275,5 +275,5 @@ if __FILE__ == $0  #This script code is executed when running this file.
             oSearch.get_data(rule["value"], oSearch.from_date, oSearch.to_date)
         end
     end
-    puts "Exiting"
+    #puts "Exiting"
 end
