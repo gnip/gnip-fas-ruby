@@ -72,22 +72,7 @@ class PtRESTful
             @url = @url + "#{account_name}/jobs.json"
         end
     end
-
-    def getRehydrationURL(account_name=nil)
-        @url = "https://rehydration.gnip.com/accounts/"  #Root url for Rehydration PowerTrack.
-
-        if account_name.nil? then #using object account_name attribute.
-            if @account_name.nil?
-                puts "No account name set.  Can not set url."
-            else
-                @url = @url + "#{@account_name}/publishers/#{@publisher}/rehydration/activities.json"
-            end
-        else #account_name passed in, so use that...
-            @url = @url + "#{account_name}/publishers/#{@publisher}/rehydration/activities.json"
-        end
-    end
-
-
+    
     def getSearchURL(account_name=nil,label=nil)
 
         @url = "https://search.gnip.com/accounts/"  #Root url for Search PowerTrack.
